@@ -1,0 +1,37 @@
+﻿<table id="template" style="visibility:hidden">
+    <tr>
+        <td class="text-left col-sm-2">
+            <input type="hidden" name="Stavke.Index" value="--id--"/>
+            <input type="hidden" name="Stavke[--id--].Id" value="--id--"/>
+            <input type="hidden" name="Stavke[--id--].SuradnikId" class="form-control" value="--suradnik_id--"/>
+            @* <input type="hidden" name="Stavke[--id--].SuradnikId" value="--suradnik_id--"/> *@
+            <input name="Stavke[--id--].DatumPocetak" class="form-control" value="--datum_od--"/>
+        </td>
+        <td class="text-center col-sm-2">
+            <input name="Stavke[--id--].DatumKraj" class="form-control" value="--datum_do--"/>
+        </td>
+        @* <td class="text-center col-sm-4"> *@
+        @*     <input name="Stavke[--id--].ProjektId" class="form-control" value="--projekt_id--"/> *@
+        @* </td> *@
+        <td class="text-center col-sm-4">
+            <select name="Stavke[--id--].ProjektId" class="form-select">
+                <option disabled selected value="">Odaberite projekt</option>
+                --projekti--
+            </select>
+        </td>
+        <td class="text-center col-sm-4">
+            <select name="Stavke[--id--].VrstaUlogeId" class="form-select">
+                <option disabled selected value="">Odaberite vrstu uloge</option>
+                --vrste_uloga--
+            </select>
+        </td>
+        @* <td class="text-center col-sm-4"> *@
+        @*     <input name="Stavke[--id--].VrstaId" class="form-control" value="--vrsta_id--"/> *@
+        @* </td> *@
+        <td>
+            <button class="btn btn-sm btn-danger deleterow" title="Izbaci">
+                <i class="fas fa-minus"></i>
+            </button>
+        </td>
+    </tr>
+</table>

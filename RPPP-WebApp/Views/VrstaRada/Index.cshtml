@@ -1,0 +1,59 @@
+﻿@model RPPP_WebApp.ViewModels.VrsteRadaViewModel
+@{
+    ViewData["Title"] = "Popis vrsti rada";
+}
+<h2>Vrste rada</h2>
+<a asp-action="Create">Unos nove vrste rada</a>
+<pager page-info="@Model.PagingInfo" page-action="Index" page-title="Unesite željenu stranicu"
+       class="float-end">
+</pager>
+
+
+<table class="table table-sm table-striped table-hover" id="tablevrsterada">
+    <thead>
+        <tr>
+            <th>
+                <a asp-route-sort="1" asp-route-page="@Model.PagingInfo.CurrentPage" asp-route-ascending="@(Model.PagingInfo.Sort == 1 ? !Model.PagingInfo.Ascending : true)">
+                    Id
+                </a>
+            </th>
+            <th>
+                <a asp-route-sort="2" asp-route-page="@Model.PagingInfo.CurrentPage" asp-route-ascending="@(Model.PagingInfo.Sort == 2 ? !Model.PagingInfo.Ascending : true)">
+                    Vrsta rada
+                </a>
+
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var rad in Model.radovi)
+        {
+            <tr>
+                <td class="text-center">@rad.Id</td>
+                <td class="text-left">@rad.VrstaRada1</td>
+                <td class="btn-group">
+                    <a asp-action="Edit"
+                   asp-route-id="@rad.Id"
+                   asp-route-page="@Model.PagingInfo.CurrentPage"
+                   asp-route-sort="@Model.PagingInfo.Sort"
+                   asp-route-ascending="@Model.PagingInfo.Ascending"
+                   class="btn btn-sm" title="Ažuriraj"><i class="fas fa-edit"></i></a>
+
+                    <form asp-action="Delete" method="post"
+                      asp-route-page="@Model.PagingInfo.CurrentPage"
+                      asp-route-sort="@Model.PagingInfo.Sort"
+                      asp-route-ascending="@Model.PagingInfo.Ascending">
+                        <input type="hidden" name="Id" value="@rad.Id" />
+                        <button type="submit" class="btn btn-sm btn-danger delete" title="Obriši"><i class="fas fa-trash-alt"></i></button>
+                    </form>
+                </td>
+            </tr>
+
+        }
+    </tbody>
+</table>
+@section scripts {
+    <script src="~/js/pager.js" asp-append-version="true"></script>
+}
+
+
+

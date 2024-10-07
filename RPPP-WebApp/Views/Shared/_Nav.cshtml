@@ -1,0 +1,163 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container-fluid">
+        <a class="navbar-brand" asp-action="Index" asp-controller="Home">RPPP Homework - Group 04</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link" asp-action="Index" asp-controller="Home">Home</a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        Student 45
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <li>
+                            <a class="dropdown-item" asp-action="Index" asp-controller="KarticaProjekta">Kartica Projekta (STP)</a>
+                        </li>
+                        @* <li> *@
+                        @*     <a class="dropdown-item" asp-action="Index" asp-controller="KarticaProjekta">Kartica Projekta (JTP)</a> *@
+                        @* </li> *@
+                        <li>
+                            <a class="dropdown-item" asp-action="Index" asp-controller="Transakcija">Transakcija (JTP)</a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item" asp-action="Index" asp-controller="VrstaTransakcije">Vrsta Transakcije (JTP)</a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        Student 3
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <li>
+                            <a class="dropdown-item" asp-action="Index" asp-controller="SuradnikMD">Suradnik (STP)</a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item" asp-action="Index" asp-controller="Suradnik">Suradnik (JTP)</a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item" asp-action="Index" asp-controller="SuradnikUloga">Suradnik Uloga (JTP)</a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item" asp-action="Index" asp-controller="VrstaUloge">Vrsta Uloge (JTP)</a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item" asp-action="Index" asp-controller="VrstaSuradnika">Vrsta Suradnika (JTP)</a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item" asp-action="Index" asp-controller="KorisnickiRacun">Korisnički Račun (JTP)</a>
+                        </li>
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
+                        <li>
+                            <a class="dropdown-item" href="~/vrstauloge.html">Vrsta Uloge (JTable)</a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        Student 2
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <li>
+                            <a asp-action="Index" asp-controller="Zadatak" class="dropdown-item">Zadatak(stp)</a>
+                        </li>
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
+                        <li>
+                            <a asp-action="Index" asp-controller="EvidencijaRada" class="dropdown-item">Evidencija rada(jtp)</a>
+                        </li>
+                        <li>
+                            <a asp-action="Index" asp-controller="StatusZadatka" class="dropdown-item">Status zadatka (jtp) </a>
+                        </li>
+                        <li>
+                            <a asp-action="Index" asp-controller="VrstaRada" class="dropdown-item">Vrsta rada(jtp) </a>
+                        </li>
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
+                        <li>
+                            <a class="dropdown-item" href="vrstarada.html">Vrsta Rada (JTable)</a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        Student 8
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <li>
+                            <a class="dropdown-item" asp-action="Index" asp-controller="Projekt">Projekt (STP)</a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item" asp-action="Index" asp-controller="Dokument">Dokument (JTP)</a>
+                        </li>
+                        <li class="dropdown-divider"></li>
+                        <li>
+                            <a class="dropdown-item" asp-action="Index" asp-controller="Narucitelj">Naručitelj (JTP)</a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item" asp-action="Index" asp-controller="VrstaDokumenta">Vrsta dokumenta (JTP)</a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item" asp-action="Index" asp-controller="StatusDokumenta">Status dokumenta (JTP)</a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item" asp-action="Index" asp-controller="VrstaProjekta">Vrsta projekta (JTP)</a>
+                        </li>
+                        <li class="dropdown-divider"></li>
+                        <li>
+                            <a class="nav-link
+                                @(ViewBag.Controller == "Report" ? "active" : "")"
+                               asp-action="Index" asp-controller="Report">
+                                Izvještaji
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        Student 42
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <li>
+                            <a class="dropdown-item" asp-action="Index" asp-controller="ProjektniZahtjevMD">Projektni zahtjev (STP)</a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item" asp-action="Index" asp-controller="ProjektniZahtjev">Projektni zahtjev (JTP)</a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item" asp-action="Index" asp-controller="PrioritetZadatka">Prioritet zadatka (JTP)</a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item" asp-action="Index" asp-controller="VrstaZahtjeva">Vrsta Zahtjeva (JTP)</a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item" asp-action="Index" asp-controller="PrioritetZahtjeva">Prioritet zahtjeva (JTP)</a>
+                        </li>
+                        <li class="dropdown-divider"></li>
+                        <li>
+                            <a class="nav-link" asp-action="Index" asp-controller="ProjektniZahtjevReport">
+                                Izvještaji
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link
+                                       @(ViewBag.Controller == "ViewLog" ? "active" : "")"
+                       asp-action="Index" asp-controller="ViewLog">
+                        Pregled log datoteka
+                    </a>
+                </li>
+            </ul>
+
+        </div>
+    </div>
+</nav>

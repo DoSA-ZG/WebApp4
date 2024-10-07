@@ -1,0 +1,125 @@
+﻿@model RPPP_WebApp.ViewModels.ProjektViewModel
+@{
+    ViewBag.Title = "Projekt " + @Model.NazivProjekt;
+}
+
+<div class="container-fluid mt-5 mb-4">
+    <div class="text-center">
+        <div>
+            <h2>
+                @Model.NazivProjekt
+            </h2>
+        </div>
+        <div class="container mt-5 mb-4">
+            <div class="row">
+                <div class="col-md">
+                    <div class="card border-0">
+                        <div class="card-body">
+                            <h5 class="card-title">KRATICA PROJEKTA</h5>
+                            <p class="card-text">@Model.KraticaProjekt</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md">
+                    <div class="card border-0">
+                        <div class="card-body">
+                            <h5 class="card-title">VRSTA PROJEKTA</h5>
+                            <p class="card-text">@Model.Vrsta</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md">
+                    <div class="card border-0">
+                        <div class="card-body">
+                            <h5 class="card-title">DATUM ISPORUKE</h5>
+                            <p class="card-text">@Model.DatumIsporukaPr</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md">
+                    <div class="card border-0">
+                        <div class="card-body">
+                            <h5 class="card-title">NARUČITELJ</h5>
+                            <p class="card-text">@Model.NazivNarucitelj</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="d-flex align-items-center justify-content-center mt-5 mb-4">
+        <div class="px-4">
+            <a asp-action="Edit"
+               asp-route-id="@Model.IdProjekt"
+               target="_blank"
+               class="btn btn-primary btn-sm" title="Ažuriraj"><i class="fas fa-edit"></i></a>
+        </div>
+        <form asp-action="Delete" method="POST"
+              asp-route-page="@ViewBag.Page"
+              asp-route-sort="@ViewBag.Sort"
+              asp-route-ascending="@ViewBag.Ascending">
+            <input type="hidden" name="IdProjekt" value="@Model.IdProjekt" />
+            <button type="submit" class="btn btn-sm btn-danger delete" title="Obriši"><i class="fas fa-trash-alt"></i></button>
+        </form>
+        <div class="px-4">
+            <a class="btn btn-sm btn-secondary cancel"
+               asp-action="Index"
+               asp-route-page="@ViewBag.Page"
+               asp-route-sort="@ViewBag.Sort"
+               asp-route-ascending="@ViewBag.Ascending"
+               title="Povratak na popis projekata">
+                <i class="fa-solid fa-rotate-left"></i>
+            </a>
+        </div>
+    </div>
+
+    <div class="row w-100 mt-5 mb-4">
+        <h5>Dokumenti:</h5>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    @{
+                        string[] nazivi = { "ID", "Naziv dokumenta", "Vrsta dok.", "Status dok.", "Ekst. dok.", "Vrijeme prijenosa", "Datum zadnje izmjene" };
+                        for (int i = 0; i < nazivi.Length; i++)
+                        {
+                            <th class="text-left">
+                                @nazivi[i]
+                            </th>
+                        }
+                    }
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var dok in Model.Dokumenti)
+                {
+                    <tr class="w-100">
+                        <td class="text-left">
+                            @dok.Id
+                        </td>
+                        <td class="text-left">
+                            @dok.NazivDok
+                        </td>
+                        <td class="text-left">
+                            @dok.VrstaDokumenta
+                        </td>
+                        <td class="text-left">
+                            @dok.StatusDokumenta
+                        </td>
+                        <td class="text-left">
+                            @dok.EkstenzijaDokumenta
+                        </td>
+                        <td class="text-left">
+                            @dok.VrPrijenos
+                        </td>
+                        <td class="text-left">
+                            @dok.DatumZadIzmj
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+

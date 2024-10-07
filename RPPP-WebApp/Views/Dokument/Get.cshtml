@@ -1,0 +1,35 @@
+﻿@model RPPP_WebApp.ViewModels.DokumentViewModel
+
+<tr hx-target="this" hx-swap="outerHTML">
+    <td class="text-left">@Model.Id</td>
+    <td class="text-left w-25">
+        @if (Model.Datoteka != null)
+        {
+            <a href="@Url.Action(nameof(DokumentController.GetDocumentContent), new { id = Model.Id })" class="show-document-link" data-document-id="@Model.Id">@Model.NazivDok</a>
+        }
+        else
+        {
+            @Model.NazivDok
+        }
+    </td>
+    <td class="text-left">@Model.VrstaDokumenta</td>
+    <td class="text-left">@Model.StatusDokumenta</td>
+    <td class="text-left">@Model.EkstenzijaDokumenta</td>
+    <td class="text-left">@Model.VrPrijenos</td>
+    <td class="text-left">@Model.DatumZadIzmj</td>
+    <td class="text-left w-25">@Model.NazivProjekt</td>
+    <td></td>
+    <td>
+        <a class="btn btn-primary btn-sm"
+           hx-get="@Url.Action(nameof(DokumentController.Edit), new { id = Model.Id })"
+           title="Ažuriraj"><i class="fa-solid fa-pen-to-square"></i></a>
+    </td>
+    <td>
+        <button class="btn btn-sm btn-danger"
+                hx-confirm="Obrisati dokument?"
+                hx-delete="@Url.Action(nameof(DokumentController.Delete), new { id = Model.Id })"
+                title="Obriši">
+            <i class="fa-solid fa-trash"></i>
+        </button>
+    </td>
+</tr>

@@ -1,0 +1,54 @@
+@model Transakcija
+
+@{
+    ViewBag.Title = "Nova transakcija";
+}
+
+<h2>Unos nove transakcije</h2>
+
+<form asp-action="Create" method="post">
+    <div asp-validation-summary="All"></div>
+
+    <div class="mb-3">
+        <label asp-for="Iznos" class="form-label">Iznos</label>
+        <input asp-for="Iznos" class="form-control" />
+        <div class="form-text"><span asp-validation-for="Iznos" class="text-danger"></span></div>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="Iban" class="form-label">IBAN</label>
+        <input asp-for="Iban" class="form-control" />
+        <div class="form-text"><span asp-validation-for="Iban" class="text-danger"></span></div>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="DatumVrijeme" class="form-label">Datum i vrijeme</label>
+        <input asp-for="DatumVrijeme" class="form-control" />
+        <div class="form-text"><span asp-validation-for="DatumVrijeme" class="text-danger"></span></div>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="KarticaProjektaId" class="form-label">Kartica projekta</label>
+        <select class="form-control" asp-for="KarticaProjektaId" asp-items="ViewBag.KarticaProjektaId">
+            <option disabled selected value="">Odaberite karticu projekta</option>
+        </select>
+        <div class="form-text"><span asp-validation-for="KarticaProjektaId" class="text-danger"></span></div>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="VrstaTransakcijeId" class="form-label">Vrsta transakcije</label>
+        <select class="form-control" asp-for="VrstaTransakcijeId" asp-items="ViewBag.VrstaTransakcijeId">
+            <option disabled selected value="">Odaberite vrstu transakcije</option>
+        </select>
+        <div class="form-text"><span asp-validation-for="VrstaTransakcijeId" class="text-danger"></span></div>
+    </div>
+
+    <div class="text-center">
+        <button class="btn btn-primary" type="submit">Dodaj</button>
+        <a asp-action="Index" class="btn btn-secondary">Odustani</a>
+    </div>
+</form>
+
+@section scripts {
+    <partial name="IncludeValidation" />
+}

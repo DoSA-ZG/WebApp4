@@ -1,0 +1,38 @@
+﻿@model RPPP_WebApp.Model.PrioritetZahtjeva
+
+@{
+    ViewBag.Title = "Ažuriranje zahtjeva";
+}
+
+<form asp-route-id="@Model.Id"
+      asp-route-page="@ViewBag.Page"
+      asp-route-sort="@ViewBag.Sort"
+      asp-route-ascending="@ViewBag.Ascending"
+      method="post">
+    <div asp-validation-summary="All"></div>
+    @*Ne koristi se, jer se ne rekonstruira cijela država, već se samo koristi id koji je već u parametrima route*@
+    @*<input type="hidden" asp-for="OznDrzave" />*@
+    <div class="form-group">
+        <label asp-for="NazivPrioritetaZahtjeva"></label>
+        <div><span asp-validation-for="NazivPrioritetaZahtjeva" class="text-danger"></span></div>
+        <input asp-for="NazivPrioritetaZahtjeva" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label asp-for="StupanjPrioriteta"></label>
+        <div><span asp-validation-for="StupanjPrioriteta" class="text-danger"></span></div>
+        <input asp-for="StupanjPrioriteta" class="form-control" />
+    </div>
+
+    <div class="text-center">
+        <button class="btn btn-primary" type="submit">Spremi</button>
+        <a asp-action="Index"
+           asp-route-page="@ViewBag.Page"
+           asp-route-sort="@ViewBag.Sort"
+           asp-route-ascending="@ViewBag.Ascending"
+           class="btn btn-secondary">Odustani</a>
+    </div>
+</form>
+
+@section scripts {
+    <partial name="IncludeValidation" />
+}

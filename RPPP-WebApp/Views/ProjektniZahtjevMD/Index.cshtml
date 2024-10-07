@@ -1,0 +1,89 @@
+﻿@model RPPP_WebApp.ViewModels.ProjektniZahtjeviViewModel
+
+@{
+    ViewBag.Title = "Projektni zahtjevi";
+}
+
+<h2>Popis projektnih zahtjeva</h2>
+
+<a asp-action="Create">Unos novog projektnog zahtjeva</a>
+
+<pager page-info="@Model.PagingInfo" page-action="Index" page-title="Unesite željenu stranicu"
+       class="float-end">
+</pager>
+
+<table class="table table-sm table-striped table-hover">
+    <thead>
+        <tr>
+            @{
+                string[] nazivi = { "Naziv zahtjeva", "Opis zahtjeva", "Prioritet zahtjeva", "Vrsta zahtjeva", "Projekt", "Zadatci" };
+                for (int i = 1; i <= nazivi.Length; i++)
+                {
+                    <th>
+                        <a asp-route-sort="@i"
+                           asp-route-page="@Model.PagingInfo.CurrentPage"
+                           asp-route-ascending="@(Model.PagingInfo.Sort == i ? !Model.PagingInfo.Ascending : true)">
+                            @nazivi[i - 1]
+                        </a>
+                    </th>
+                }
+            }
+            <th></th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var prZahtjev in Model.ProjektniZahtjevi)
+        {
+            <tr>
+                <td class="text-left">
+                    <a asp-action="Show"
+                       asp-route-id="@prZahtjev.Id"
+                       asp-route-page="@Model.PagingInfo.CurrentPage"
+                       asp-route-sort="@Model.PagingInfo.Sort"
+                       asp-route-ascending="@Model.PagingInfo.Ascending">
+                        @prZahtjev.NazivZahtjeva
+                    </a>
+                </td>
+                <td class="text-left">@prZahtjev.OpisZahtjeva</td>
+                <td class="text-left">@prZahtjev.PrioritetZahtjeva</td>
+                <td class="text-left">@prZahtjev.VrstaZahtjeva</td>
+                <td class="text-left">@prZahtjev.Projekt</td>
+                <td class="text-left">@prZahtjev.NaziviZadataka</td>
+                <td>
+                    <a asp-action="Edit"
+                       asp-route-id="@prZahtjev.Id"
+                       asp-route-page="@Model.PagingInfo.CurrentPage"
+                       asp-route-sort="@Model.PagingInfo.Sort"
+                       asp-route-ascending="@Model.PagingInfo.Ascending"
+                       class="btn btn-warning btn-sm" title="Ažuriraj"><i class="fas fa-edit"></i></a>
+                </td>
+                <td>
+                    <form asp-action="Delete" method="post"
+                          asp-route-page="@Model.PagingInfo.CurrentPage"
+                          asp-route-sort="@Model.PagingInfo.Sort"
+                          asp-route-ascending="@Model.PagingInfo.Ascending">
+                        <input type="hidden" name="IdPrZahtjeva" value="@prZahtjev.Id" />
+                        <button type="submit" class="btn btn-sm btn-danger delete" title="Obriši"><i class="fas fa-trash-alt"></i></button>
+                    </form>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@section styles {
+    <link rel="stylesheet" href="~/lib/jqueryui/themes/base/jquery-ui.css" />
+}
+
+@section scripts {
+    <script src="~/js/pager.js" asp-append-version="true"></script>
+    <script src="~/lib/htmx/htmx.min.js" asp-append-version="true"></script>
+    <partial name="IncludeValidation" />
+
+    <script>
+        document.body.addEventListener("showMessage", function (evt) {
+            toastr[evt.detail.messageType](evt.detail.message);
+        })
+    </script>
+}

@@ -1,0 +1,36 @@
+﻿@model EvidencijaRada
+
+<div id="form-container">
+    <div class="zad-form-label">Nova evidencija</div>
+    <form asp-route-zadid="@ViewBag.zadId"
+          asp-route-position="@ViewBag.Position"
+          asp-route-page="@ViewBag.Page"
+          asp-route-sort="@ViewBag.Sort"
+          class="zad-task-form"
+          asp-route-ascending="@ViewBag.Ascending"
+          asp-action="CreateEv"
+          method="post">
+        <input type="hidden" asp-for="ZadatakId" value="@ViewBag.zadId" />
+        <label asp-for="BrojSati" class="zad-form-label"></label>
+        <input asp-for="BrojSati" class="zad-form-input" />
+
+        <label asp-for="OpisRada" class="zad-form-label"></label>
+        <input asp-for="OpisRada" class="zad-form-input" />
+
+        <label asp-for="VrstaRadaId" class="zad-form-label"></label>
+        <select class="zad-form-input" asp-for="VrstaRadaId" asp-items="ViewBag.Vrsterada">
+            <option disabled selected value="">Odaberite vrstu rada</option>
+        </select>
+
+        <label asp-for="SuradnikId" class="zad-form-label"></label>
+        <select class="zad-form-input" asp-for="SuradnikId" asp-items="ViewBag.Suradnici">
+            <option disabled selected value="">Odaberite suradnika</option>
+        </select>
+
+        <div></div>
+        <button class="btn btn-primary" type="submit">Dodaj</button>
+        <div class="evi-task-form">
+        <div asp-validation-summary="All" class="text-danger"></div>
+        </div>
+    </form>
+</div>

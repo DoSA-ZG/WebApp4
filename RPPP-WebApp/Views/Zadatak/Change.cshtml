@@ -1,0 +1,132 @@
+﻿@model ZadatakViewModel
+@{
+    ViewBag.Title = "Zadatak: " + @Model.Id;
+    ViewBag.zadId = Model.Id;
+}
+
+<div asp-validation-summary="All" class="form-group row"></div>
+
+
+<div id="form-container-zad">
+    <form class="zad-task-form"
+          asp-controller="Zadatak"
+          asp-route-id="@Model.Id"
+          asp-route-page="@ViewBag.Page"
+          asp-route-sort="@ViewBag.Sort"
+          asp-route-position="@ViewBag.Position"
+          asp-action="Change"
+          method="post">
+        <input type="hidden" asp-for="Id">
+        
+        <label asp-for="OpisZadatak" class="zad-form-label" >Opis zadatka</label>
+        <input class="zad-form-input" asp-for="OpisZadatak">
+
+        <label class="zad-form-label" asp-for="PrioritetZadatkaId">Prioritet zadatka</label>
+        <select class="zad-form-input" asp-for="PrioritetZadatkaId" asp-items="ViewBag.Prioriteti">
+            <option disabled selected value="">Odaberite prioritet</option>
+        </select>
+
+        <label class="zad-form-label" asp-for="StatusZadatkaId">Status zadatka</label>
+        <select class="zad-form-input" asp-for="StatusZadatkaId" asp-items="ViewBag.Statusi">
+            <option disabled selected value="">Odaberite status</option>
+        </select>
+
+        <label class="zad-form-label" asp-for="SuradnikId">Suradnik</label>
+        <select class="zad-form-input" asp-for="SuradnikId" asp-items="ViewBag.Suradnici">
+              <option disabled selected value="">Odaberite suradnika</option>
+        </select>
+
+
+        <label class="zad-form-label" asp-for="ProjektniZahtjevId">Projektni zahtjev</label>
+        <select class="zad-form-input" asp-for="ProjektniZahtjevId" asp-items="ViewBag.Zahtjevi">
+               <option disabled selected value="">Odaberite zahtjev</option>
+        </select>
+
+        <label class="zad-form-label" asp-for="PlanPocetak">Planirani početak</label>
+        <input class="zad-form-input" asp-for="PlanPocetak"/>
+
+        <label class="zad-form-label" asp-for="PlanKraj">Planirani kraj</label>
+        <input class="zad-form-input" asp-for="PlanKraj">
+
+        <label class="zad-form-label" asp-for="StvarniPocetak">Stvarni početak</label>
+        <input class="zad-form-input" asp-for="StvarniPocetak" />
+
+        <label class="zad-form-label" asp-for="StvarniKraj">Stvarni kraj</label>
+        <input class="zad-form-input" asp-for="StvarniKraj" />
+
+
+        <div class="zad-button-container">
+            @if (ViewBag.Previous != null)
+            {
+                <a class="btn btn-sm btn-primary"
+               asp-action="Change"
+               asp-route-page="@ViewBag.Page"
+               asp-route-sort="@ViewBag.Sort"
+               asp-route-ascending="@ViewBag.Ascending"
+               asp-route-filter="@ViewBag.Filter"
+               asp-route-position="@(ViewBag.Position - 1)"
+               asp-route-id="@ViewBag.Previous">
+                    <i class="fas fa-step-backward"></i>
+                </a>
+            }
+            <button id="save" type="submit" class="btn btn-sm btn-primary save" title="Spremi"><i class="fas fa-save"></i></button>
+            <a class="btn btn-sm btn-primary cancel"
+               asp-action="Change"
+               asp-route-id="@Model.Id"
+               asp-route-page="@ViewBag.Page"
+               asp-route-sort="@ViewBag.Sort"
+               asp-route-ascending="@ViewBag.Ascending"
+               asp-route-filter="@ViewBag.Filter"
+               asp-route-position="@ViewBag.Position"
+               title="Osvježi">
+                <i class="fas fa-sync-alt"></i>
+            </a>
+            <a class="btn btn-sm btn-primary cancel"
+               asp-action="Index"
+               asp-route-page="@ViewBag.Page"
+               asp-route-sort="@ViewBag.Sort"
+               asp-route-ascending="@ViewBag.Ascending"
+               asp-route-filter="@ViewBag.Filter"
+               title="Odustani">
+                <i class="fas fa-undo-alt"></i>
+            </a>
+            @if (ViewBag.Next != null)
+            {
+                <a class="btn btn-sm btn-primary" asp-action="Change"
+               asp-route-page="@ViewBag.Page"
+               asp-route-sort="@ViewBag.Sort"
+               asp-route-ascending="@ViewBag.Ascending"
+               asp-route-filter="@ViewBag.Filter"
+               asp-route-position="@(ViewBag.Position + 1)"
+               asp-route-id="@ViewBag.Next">
+                    <i class="fas fa-step-forward"></i>
+                </a>
+            }
+            
+        </div>
+        <div asp-validation-summary="All"></div>
+
+    </form>
+</div>
+
+        
+    
+
+
+@foreach (var evidencija in Model.Evidencije)
+{
+           
+            
+        <partial name="Evidencije" model="evidencija"  />
+            
+            
+}
+    <partial name="EvidencijaDodaj" model="@Model.NovaEvidencija" />
+
+
+
+
+@section scripts {
+        <partial name="IncludeValidation" />
+}
+

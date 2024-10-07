@@ -1,0 +1,75 @@
+﻿@model RPPP_WebApp.ViewModels.EvidencijeRadaViewModel
+@{
+    ViewData["Title"] = "Popis zadataka";
+}
+<h2>Evidencije rada</h2>
+<a asp-action="Create">Unos nove evidencije</a>
+<pager page-info="@Model.PagingInfo" page-action="Index" page-title="Unesite željenu stranicu"
+       class="float-end">
+</pager>
+
+
+<table class="table table-sm table-striped table-hover" id="tableevidencije">
+    <thead>
+        <tr>
+            <th>
+                <a asp-route-sort="1" asp-route-page="@Model.PagingInfo.CurrentPage" asp-route-ascending="@(Model.PagingInfo.Sort == 1 ? !Model.PagingInfo.Ascending : true)">
+                    Broj sati
+                </a>
+            </th>
+            <th>
+                <a asp-route-sort="2" asp-route-page="@Model.PagingInfo.CurrentPage" asp-route-ascending="@(Model.PagingInfo.Sort == 2 ? !Model.PagingInfo.Ascending : true)">
+                    Opis rada
+                </a>
+            </th>
+            <th>
+                <a asp-route-sort="3" asp-route-page="@Model.PagingInfo.CurrentPage" asp-route-ascending="@(Model.PagingInfo.Sort == 3 ? !Model.PagingInfo.Ascending : true)">
+                    Opis zadatka
+                </a>
+            </th>
+            <th>
+                <a asp-route-sort="4" asp-route-page="@Model.PagingInfo.CurrentPage" asp-route-ascending="@(Model.PagingInfo.Sort == 4 ? !Model.PagingInfo.Ascending : true)">
+                    Vrsta rada
+                </a>
+            </th>
+            <th>
+                <a asp-route-sort="5" asp-route-page="@Model.PagingInfo.CurrentPage" asp-route-ascending="@(Model.PagingInfo.Sort == 5 ? !Model.PagingInfo.Ascending : true)">
+                    Email
+                </a>
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var evidencija in Model.Evidencije)
+        {
+            <tr>
+                <td class="text-center">@evidencija.BrojSati</td>
+                <td class="text-left">@evidencija.OpisRada</td>
+                <td class="text-left">@evidencija.OpisZadatak</td>
+                <td class="text-left">@evidencija.VrstaRada</td>
+                <td class="text-left">@evidencija.Email</td>
+                <td class="btn-group">
+                    <a asp-action="Edit"
+                   asp-route-id="@evidencija.Id"
+                   asp-route-page="@Model.PagingInfo.CurrentPage"
+                   asp-route-sort="@Model.PagingInfo.Sort"
+                   asp-route-ascending="@Model.PagingInfo.Ascending"
+                   class="btn btn-sm" title="Ažuriraj"><i class="fas fa-edit"></i></a>
+
+                    <form asp-action="Delete" method="post"
+                      asp-route-page="@Model.PagingInfo.CurrentPage"
+                      asp-route-sort="@Model.PagingInfo.Sort"
+                      asp-route-ascending="@Model.PagingInfo.Ascending">
+                        <input type="hidden" name="Id" value="@evidencija.Id" />
+                        <button type="submit" class="btn btn-sm btn-danger delete" title="Obriši"><i class="fas fa-trash-alt"></i></button>
+                    </form>
+                </td>
+            </tr>
+
+        }
+    </tbody>
+</table>
+@section scripts {
+    <script src="~/js/pager.js" asp-append-version="true"></script>
+}
+

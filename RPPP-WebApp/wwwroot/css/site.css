@@ -1,0 +1,119 @@
+﻿main {
+    padding-left: 50px;
+    padding-right: 50px;
+}
+
+.logo-icon {
+    height: 30px;
+}
+
+.validation-summary-errors {
+    font-weight: bold;
+    color: #a94442;
+}
+
+.validation-summary-valid {
+    display: none;
+}
+
+.input-validation-error {
+    border-color: red;
+}
+
+.pagebox {
+    width: 45px;
+}
+
+    .pagebox::selection {
+        background-color: grey;
+    }
+
+.malaslika {
+    height: 40px;
+}
+
+.pagebox {
+    width: 40px;
+}
+.pagebox::selection{
+    background-color:grey;
+}
+
+
+
+
+#form-container {
+    background-color: #f4f4f4;
+    padding: 20px;
+    margin: 20px;
+}
+#form-container-zad {
+    background-color: #f4f4f4;
+    padding: 20px;
+    margin: 20px;
+    border-radius: 10px;
+    border: solid;
+    border-color: blue;
+}
+
+.zad-task-form {
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 16px;
+    padding: 10px;
+}
+
+.evi-task-form {
+    background-color: #fff;
+    display: grid;
+    align-items: center;
+    grid-template-columns: repeat(auto auto);
+    gap: 16px;
+    padding: 20px;
+}
+
+.zad-form-label {
+    display: block;
+    margin-bottom: 4px;
+    font-weight: bold;
+}
+
+.zad-form-input {
+    width: calc(100% - 8px);
+    padding: 8px;
+    box-sizing: border-box;
+}
+
+.zad-form-button {
+    grid-column: span 2;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+.zad-button-container {
+    grid-column: span 2;
+    display: flex;
+    justify-content: space-between;
+}
+
+.zad-submit-button {
+    background-color: #4caf50;
+    color: #fff;
+}
+
+.zad-cancel-button {
+    background-color: #ddd;
+    color: #555;
+}
+
+.zad-form-button:hover {
+    background-color: #45a049;
+}
+
+.zad-cancel-button:hover {
+    background-color: #ccc;
+}

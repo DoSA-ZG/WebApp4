@@ -1,0 +1,99 @@
+﻿@model RPPP_WebApp.ViewModels.ProjektiViewModel
+@{
+    ViewBag.Title = "Projekti";
+    var viewdata = new ViewDataDictionary(ViewData) {
+        { "PagingInfo", Model.PagingInfo }
+    };
+
+}
+
+<div class="container-fluid">
+    <div class="form-group row">
+        <div class="col-sm-4">
+            <h2 class="mt-4 mb-3">Pregled svih projekata</h2>
+            <br />
+            <a class="btn btn-primary" asp-action="Create">Unos novog projekta</a>
+        </div>
+    </div>
+</div>
+
+<pager page-info="@Model.PagingInfo" page-action="Index" page-title="Unesite željenu stranicu"
+       class="float-end">
+</pager>
+
+<div class="container-fluid mt-5 mb-4">
+
+    <table class="table table-sm table-striped table-hover">
+        <thead>
+            <tr>
+                @{
+                    string[] nazivi = { "ID", "Naziv projekta", "Vrsta projekta", "Datum isporuke projekta", "Naručitelj" };
+                    for (int i = 1; i <= nazivi.Length; i++)
+                    {
+                        <th>
+                            <a asp-route-sort="@i"
+                               asp-route-page="@Model.PagingInfo.CurrentPage"
+                               asp-route-ascending="@(Model.PagingInfo.Sort == i ? !Model.PagingInfo.Ascending : true)">
+                                @nazivi[i - 1]
+                            </a>
+                        </th>
+                    }
+                    <th class="w-25">
+                        <a>Dokumenti</a>
+                    </th>
+                }
+                <th></th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var projekt in Model.Projekti)
+            {
+                <tr>
+                    <td>@projekt.IdProjekt</td>
+                    <td>@projekt.NazivProjekt</td>
+                    <td>@projekt.Vrsta</td>
+                    <td>@projekt.DatumIsporukaPr</td>
+                    <td>@projekt.NazivNarucitelj</td>
+                    <td>
+                        @if (projekt.Dokumenti.Any())
+                        {
+                            <p class="d-inline">@string.Join(", ", projekt.Dokumenti.Select(d => d.NazivDok))</p>
+                        }
+                    </td>
+                    <td>
+                        <a asp-action="Show"
+                           asp-route-id="@projekt.IdProjekt"
+                           asp-route-page="@Model.PagingInfo.CurrentPage"
+                           asp-route-sort="@Model.PagingInfo.Sort"
+                           asp-route-ascending="@Model.PagingInfo.Ascending"
+                           class="btn btn-primary btn-sm" title="Detalji"><i class="fa-solid fa-circle-info"></i></a>
+                    </td>
+                    <td>
+                        <a asp-action="Edit"
+                           asp-route-id="@projekt.IdProjekt"
+                           asp-route-page="@Model.PagingInfo.CurrentPage"
+                           asp-route-sort="@Model.PagingInfo.Sort"
+                           asp-route-ascending="@Model.PagingInfo.Ascending"
+                           class="btn btn-secondary btn-sm" title="Ažuriraj"><i class="fas fa-edit"></i></a>
+                    </td>
+                    <td>
+                        <form asp-action="Delete" method="POST"
+                              asp-route-id="@projekt.IdProjekt"
+                              asp-route-page="@Model.PagingInfo.CurrentPage"
+                              asp-route-sort="@Model.PagingInfo.Sort"
+                              asp-route-ascending="@Model.PagingInfo.Ascending">
+                            <input type="hidden" name="IdProjekt" value="@projekt.IdProjekt" />
+                            <button type="submit" class="btn btn-sm btn-danger delete" title="Obriši"><i class="fas fa-trash-alt"></i></button>
+                        </form>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+
+@section scripts {
+    <script src="~/js/pager.js" asp-append-version="true"></script>
+}

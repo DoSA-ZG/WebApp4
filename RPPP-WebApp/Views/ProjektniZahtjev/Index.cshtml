@@ -1,0 +1,52 @@
+﻿@model RPPP_WebApp.ViewModels.ProjektniZahtjeviViewModel
+@{
+    ViewBag.Title = "Projektni Zahtjevi";
+}
+
+<h2>Popis projektnih zahtjeva</h2>
+
+<a asp-action="Create">Unos novog zahtjeva</a>
+
+<pager page-info="@Model.PagingInfo" page-action="Index" page-title="Unesite željenu stranicu"
+       class="float-end">
+</pager>
+
+<table class="table table-sm table-striped table-hover">
+    <thead>
+        <tr>
+            @{
+                string[] nazivi = { "Naziv zahtjeva", "Opis zahtjeva", "Prioritet zahtjeva", "Vrsta zahtjeva", "Projekt" };
+                for (int i = 1; i <= nazivi.Length; i++)
+                {
+                    <th>
+                        <a asp-route-sort="@i"
+                           asp-route-page="@Model.PagingInfo.CurrentPage"
+                           asp-route-ascending="@(Model.PagingInfo.Sort == i ? !Model.PagingInfo.Ascending : true)">
+                            @nazivi[i - 1]
+                        </a>
+                    </th>
+                }
+            }
+            <th></th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var projektniZahtjev in Model.ProjektniZahtjevi)
+        {
+            <partial name="Get" model="projektniZahtjev" />
+        }
+    </tbody>
+</table>
+
+@section scripts {
+    <script src="~/js/pager.js" asp-append-version="true"></script>
+    <script src="~/lib/htmx/htmx.min.js" asp-append-version="true"></script>
+    <partial name="IncludeValidation" />
+
+    <script>
+        document.body.addEventListener("showMessage", function (evt) {
+            toastr[evt.detail.messageType](evt.detail.message);
+        })
+    </script>
+}

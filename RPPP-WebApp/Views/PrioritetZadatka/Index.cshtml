@@ -1,0 +1,60 @@
+﻿@model RPPP_WebApp.ViewModels.PrioritetiZadatakaViewModel
+
+@{
+    ViewBag.Title = "Prioriteti zadataka";
+}
+
+<h2>Popis prioriteta zadataka</h2>
+
+<a asp-action="Create">Unos novog prioriteta</a>
+
+<pager page-info="@Model.PagingInfo" page-action="Index" page-title="Unesite željenu stranicu"
+       class="float-end">
+</pager>
+
+<table class="table table-sm table-striped table-hover">
+    <thead>
+        <tr>
+            <th>
+                <a asp-route-sort="1" asp-route-page="@Model.PagingInfo.CurrentPage" asp-route-ascending="@(Model.PagingInfo.Sort == 1 ? !Model.PagingInfo.Ascending : true)">
+                    NazivPrioriteta
+                </a>
+            </th>
+            <th>
+                <a asp-route-sort="2" asp-route-page="@Model.PagingInfo.CurrentPage" asp-route-ascending="@(Model.PagingInfo.Sort == 2 ? !Model.PagingInfo.Ascending : true)">
+                    StupanjPrioriteta
+                </a>
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var prioritet in Model.PrioritetiZadataka)
+        {
+            <tr>
+                <td class="text-left">@prioritet.NazivPrioriteta</td>
+                <td class="text-left">@prioritet.StupanjPrioriteta</td>
+                <td class="btn-group">
+                    <a asp-action="Edit"
+                       asp-route-id="@prioritet.Id"
+                       asp-route-page="@Model.PagingInfo.CurrentPage"
+                       asp-route-sort="@Model.PagingInfo.Sort"
+                       asp-route-ascending="@Model.PagingInfo.Ascending"
+                       class="btn btn-sm" title="Ažuriraj"><i class="fas fa-edit"></i></a>
+
+                    <form asp-action="Delete" method="post"
+                          asp-route-page="@Model.PagingInfo.CurrentPage"
+                          asp-route-sort="@Model.PagingInfo.Sort"
+                          asp-route-ascending="@Model.PagingInfo.Ascending">
+                        <input type="hidden" name="Id" value="@prioritet.Id" />
+                        <button type="submit" class="btn btn-sm btn-danger delete" title="Obriši"><i class="fas fa-trash-alt"></i></button>
+                    </form>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@section scripts {
+    <script src="~/js/pager.js" asp-append-version="true"></script>
+}

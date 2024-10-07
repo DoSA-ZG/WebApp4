@@ -1,0 +1,106 @@
+﻿@model RPPP_WebApp.ViewModels.ProjektniZahtjevViewModel
+@{
+    ViewBag.Title = "Projektni zahtjev: " + @Model.NazivZahtjeva;
+}
+
+<div class="container">
+    <div class="row text-center">
+        <div class="col-sm-8">
+            <h4>
+                @Model.NazivZahtjeva -  @Model.OpisZahtjeva 
+            </h4>
+        </div>
+    </div>
+
+    <div class="row justify-content-sm-center">
+        <div class="col-sm-2">
+           Prioritet zahtjeva: @Model.PrioritetZahtjeva
+        </div>
+        <div class="col-sm-2">
+            Vrsta zahtjeva: @Model.VrstaZahtjeva
+        </div>
+        <div class="col-sm-2">
+            Projekt: @Model.Projekt
+        </div>
+        
+       <div class="col-sm-1 text-right">
+            <a asp-action="Edit"
+               asp-route-id="@Model.Id"
+               target="_blank"
+               class="btn btn-warning btn-sm" title="Ažuriraj"><i class="fas fa-edit"></i></a>
+        </div>
+        <form asp-action="Delete" method="post"
+              asp-route-page="@ViewBag.Page"
+              asp-route-sort="@ViewBag.Sort"
+              asp-route-ascending="@ViewBag.Ascending"
+              asp-route-filter="@ViewBag.Filter">
+            <input type="hidden" name="IdDokumenta" value="@Model.Id" />
+            <button type="submit" class="btn btn-sm btn-danger delete" title="Obriši"><i class="fas fa-trash-alt"></i></button>
+        </form>
+        
+        <div class="col-sm-1 text-left">
+            <a class="btn btn-sm btn-primary cancel"
+               asp-action="Index"
+               asp-route-page="@ViewBag.Page"
+               asp-route-sort="@ViewBag.Sort"
+               asp-route-ascending="@ViewBag.Ascending"
+               title="Povratak na popis projektnih zahtjeva">
+                <i class="fas fa-undo-alt"></i>
+            </a>
+        </div>
+    </div>
+
+    <div class="row">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    @{
+                        string[] nazivi = { "Plan pocetka","Plan kraja", "Stvarni pocetak", "Stvarni kraj", "Opis zadatka", "Prioritet zadatka","Status zadatka", "Projektni zahtjev",
+                    "Suradnik" };
+                        for (int i = 0; i < nazivi.Length; i++)
+                        {
+                            <th class="text-center">
+                                @nazivi[i]
+                            </th>
+                        }
+                    }
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var zadatak in Model.Zadatci)
+                {
+                    <tr>
+                        <td class="text-center col-sm-4">
+                            @zadatak.PlanPocetak
+                        </td>
+                        <td class="text-center col-sm-1">
+                            @zadatak.PlanKraj
+                        </td>
+                        <td class="text-center col-sm-1">
+                            @zadatak.StvarniPocetak
+                        </td>
+                        <td class="text-center col-sm-1">
+                            @zadatak.StvarniKraj
+                        </td>
+                        <td class="text-center col-sm-2">
+                            @zadatak.OpisZadatak
+                        </td>
+                        <td class="text-center col-sm-2">
+                            @zadatak.PrioritetZadatka
+                        </td>
+                        <td class="text-center col-sm-2">
+                            @zadatak.StatusZadatka
+                        </td>
+                        <td class="text-center col-sm-2">
+                            @zadatak.ProjektniZahtjev
+                        </td>
+                        <td class="text-center col-sm-2">
+                            @zadatak.Suradnik
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

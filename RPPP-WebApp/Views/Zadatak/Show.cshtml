@@ -1,0 +1,137 @@
+﻿@model ZadatakViewModel
+@{
+    ViewBag.Title = "Zadatak br. " + @Model.Id;
+}
+
+<div class="container">
+    <div class="row text-center">
+        <div class="col-sm-2">
+            @if (ViewBag.Previous != null)
+            {
+                    <a class="btn btn-sm btn-primary"
+                   asp-action="Show"
+                   asp-route-page="@ViewBag.Page"
+                   asp-route-sort="@ViewBag.Sort"
+                   asp-route-ascending="@ViewBag.Ascending"
+                   asp-route-filter="@ViewBag.Filter"
+                   asp-route-position="@(ViewBag.Position - 1)"
+                   asp-route-id="@ViewBag.Previous">
+                        <i class="fas fa-step-backward"></i>
+                    </a>
+            }
+        </div>
+        <div class="col-sm-8">
+            <h4>
+               @Model.OpisZadatak
+            </h4>
+        </div>
+        
+        <div class="col-sm-2">
+            @if (ViewBag.Next != null)
+            {
+                    <a class="btn btn-sm btn-primary" asp-action="Show"
+                   asp-route-page="@ViewBag.Page"
+                   asp-route-sort="@ViewBag.Sort"
+                   asp-route-ascending="@ViewBag.Ascending"
+                   asp-route-filter="@ViewBag.Filter"
+                   asp-route-position="@(ViewBag.Position + 1)"
+                   asp-route-id="@ViewBag.Next">
+                        <i class="fas fa-step-forward"></i>
+                    </a>
+            }
+        </div>
+    </div>
+
+
+   
+        <div class="row justify-content-sm-center">
+            <div class="col-sm-2">
+                Status: @Model.Status  
+            </div>
+            <div class="col-sm-3">
+                Prioritet : @Model.NazivPrioriteta
+            </div>
+            <div class="col-sm-3">
+                Suradnik : @Model.Email
+            </div>
+        </div>
+    <div class="row justify-content-sm-center">
+        <div class="col-sm-3">
+            Planirani pocetak: @Model.PlanPocetak.ToString("d.MM.yyyy.")
+        </div>
+        <div class="col-sm-3">
+            Stvarni pocetak: @Model.StvarniPocetak?.ToString("d.MM.yyyy.")
+        </div>
+    </div>
+    <div class="row justify-content-sm-center">
+        <div class="col-sm-3">
+            Planirani kraj: @Model.PlanKraj.ToString("d.MM.yyyy.")
+        </div>
+        <div class="col-sm-3">
+            Stvarni kraj: @Model.StvarniKraj?.ToString("d.MM.yyyy.")
+        </div>
+        <div class="col-sm-1 text-right">
+            <a asp-action="Change"
+               asp-route-id="@Model.Id"
+               asp-route-position="@ViewBag.Position"
+               target="_blank"
+               class="btn btn-warning btn-sm" title="Ažuriraj"><i class="fas fa-edit"></i></a>
+        </div>
+        @*<div class="col-sm-1 text-right">
+            <a asp-action="Edit"
+               asp-route-id="@Model.Id"
+               target="_blank"
+               class="btn btn-warning btn-sm" title="Ažuriraj"><i class="fas fa-edit"></i></a>
+        </div>*@
+        <form asp-action="Delete" method="post"
+              asp-route-page="@ViewBag.Page"
+              asp-route-sort="@ViewBag.Sort"
+              asp-route-ascending="@ViewBag.Ascending"
+              asp-route-filter="@ViewBag.Filter">
+            <input type="hidden" name="Id" value="@Model.Id" />
+            <button type="submit" class="btn btn-sm btn-danger delete" title="Obriši"><i class="fas fa-trash-alt"></i></button>
+        </form>
+        <div class="col-sm-1 text-left">
+            <a class="btn btn-sm btn-primary cancel"
+               asp-action="Index"
+               asp-route-page="@ViewBag.Page"
+               asp-route-sort="@ViewBag.Sort"
+               asp-route-ascending="@ViewBag.Ascending"
+               asp-route-filter="@ViewBag.Filter"
+               title="Povratak na popis zadataka">
+                <i class="fas fa-undo-alt"></i>
+            </a>
+        </div>
+    </div>
+
+    <div class="row">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    @{
+                        string[] nazivi = { "Broj sait", "Opis rada", "Opis zadatka", "Vrsta rada", "Email" };
+                        for (int i = 0; i < nazivi.Length; i++)
+                        {
+                                    <th class="text-center">
+                                @nazivi[i]
+                                    </th>
+                        }
+                    }
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var evidencija in Model.Evidencije)
+                {
+                        <tr>
+                           <td class="text-center">@evidencija.BrojSati</td>
+                           <td class="text-left">@evidencija.OpisRada</td>
+                           <td class="text-left">@evidencija.OpisZadatak</td>
+                           <td class="text-left">@evidencija.VrstaRada</td>
+                           <td class="text-left">@evidencija.Email</td>
+                        </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

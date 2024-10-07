@@ -1,0 +1,187 @@
+﻿@model RPPP_WebApp.ViewModels.ProjektViewModel
+@{
+    ViewBag.Title = "Uređivanje projekta";
+}
+
+<div class="container-fluid">
+    <div class="form-group row">
+        <h2 class="mt-4 mb-3">Uređivanje projekta</h2>
+    </div>
+</div>
+
+<div class="container-fluid mt-4 mb-3">
+    <form id="projekt_form" method="POST" asp-action="Edit"
+          asp-route-page="@ViewBag.Page"
+          asp-route-sort="@ViewBag.Sort"
+          asp-route-ascending="@ViewBag.Ascending"
+          asp-route-position="@ViewBag.Position"
+          enctype="multipart/form-data">
+
+        <input type="hidden" asp-for="IdProjekt" />
+        <div asp-validation-summary="All" class="form-group row"></div>
+
+        <div class="form-group row mt-2 mb-2">
+            <label asp-for="NazivProjekt" class="col-sm-2 col-form-label"></label>
+            <div class="col-sm-2">
+                <input asp-for="NazivProjekt" class="form-control" />
+            </div>
+            <label asp-for="KraticaProjekt" class="col-sm-2 col-form-label"></label>
+            <div class="col-sm-1">
+                <input asp-for="KraticaProjekt" class="form-control" />
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label asp-for="Vrsta" class="col-sm-2 col-form-label">Vrsta projekta</label>
+            <div class="col-sm-2">
+                <select class="form-control" asp-for="Vrsta" asp-items="ViewBag.VrsteProj" id="vrstaDropdown">
+                    <option disabled selected value="">Odaberite vrstu projekta</option>
+                </select>
+                <div class="form-text"><span asp-validation-for="Vrsta" class="text-danger"></span></div>
+            </div>
+
+            <label asp-for="VrstaProjektaId" class="col-sm-2 col-form-label">ID</label>
+            <div class="col-sm-1">
+                <input asp-for="VrstaProjektaId" readonly="readonly" class="form-control" id="vrstaIdInput" />
+            </div>
+
+        </div>
+
+        <div class="form-group row mb-1">
+            <label asp-for="DatumIsporukaPr" class="col-sm-2 col-form-label">Datum isporuke</label>
+            <div class="col-sm-2">
+                <input asp-for="DatumIsporukaPr" class="form-control datum" />
+            </div>
+        </div>
+
+        <div class="form-group row mb-1">
+
+            <label asp-for="NazivNarucitelj" class="col-sm-2 col-form-label">Naziv naručitelja</label>
+            <div class="col-sm-2">
+                <select class="form-control" asp-for="NazivNarucitelj" asp-items="ViewBag.Narucitelji" id="naruciteljiDropdown">
+                    <option disabled selected value="">Odaberite naručitelja</option>
+                </select>
+                <div class="form-text"><span asp-validation-for="NazivNarucitelj" class="text-danger"></span></div>
+            </div>
+
+            <label asp-for="NaruciteljId" class="col-sm-2 col-form-label">ID</label>
+            <div class="col-sm-1">
+                <input asp-for="NaruciteljId" readonly="readonly" class="form-control" id="naruciteljIdInput" />
+            </div>
+        </div>
+
+        <div class="form-group row mt-2 mb-2">
+            <div class="mt-3 mb-3">
+                <button id="save" type="submit" class="btn btn-sm btn-success save" title="Spremi"><i class="fas fa-save"></i></button>
+                <a class="btn btn-sm btn-primary cancel"
+                   asp-action="Edit"
+                   asp-route-id="@Model.IdProjekt"
+                   asp-route-page="@ViewBag.Page"
+                   asp-route-sort="@ViewBag.Sort"
+                   asp-route-ascending="@ViewBag.Ascending"
+                   asp-route-position="@ViewBag.Position"
+                   title="Osvježi">
+                    <i class="fas fa-sync-alt"></i>
+                </a>
+                <a class="btn btn-sm btn-secondary cancel"
+                   asp-action="Index"
+                   asp-route-page="@ViewBag.Page"
+                   asp-route-sort="@ViewBag.Sort"
+                   asp-route-ascending="@ViewBag.Ascending"
+                   title="Odustani">
+                    <i class="fas fa-undo-alt"></i>
+                </a>
+            </div>
+        </div>
+        <hr />
+
+        <div class="table-container">
+            <partial name="Dokumenti" model="Model.Dokumenti" />
+        </div>
+    </form>
+</div>
+
+@section scripts {
+
+    <script src="~/lib/jqueryui/jquery-ui.js"></script>
+    <script src="~/lib/jqueryui/jquery-ui.min.js"></script>
+
+    <script>
+        var statusiDokJson = @Html.Raw(Json.Serialize(ViewBag.Statusi));
+        var vrsteDokJson = @Html.Raw(Json.Serialize(ViewBag.VrsteDok));
+
+        function generateDropdownOptions(optionsJson) {
+            console.log(optionsJson);
+            var options = optionsJson;
+            var dropdownOptions = "";
+            options.forEach(option => {
+                dropdownOptions += `<option value="${option.Value}">${option.Text}</option>`;
+            });
+            return dropdownOptions;
+        }
+    </script>
+
+    <script src="~/js/projektiEdit.js" asp-append-version="true"></script>
+    <script src="~/js/projekti.js" asp-append-version="true"></script>
+
+    <script>
+        function handleFileChange(input) {
+            var fileInput = document.getElementById('dokument-datoteka');
+            var fileNameInput = document.querySelector('dokument-naziv"]');
+            var fileExtensionInput = document.querySelector('dokument-ekstenzija');
+            var vrPrijenosInput = document.querySelector('dokument-vrprijenos');
+            var datumZadIzmjinput = document.querySelector('dokument-datumzadizmj"]');
+
+
+                if (fileInput.files.length > 0) {
+
+                    var fileName = fileInput.files[0].name;
+                    fileNameInput.value = fileName.split('.').slice(0, -1).join('.');
+                    fileExtensionInput.value = '.' + getFileExtension(fileName);
+                    vrPrijenosInput.value = getCurrentDateTime();
+                    datumZadIzmjinput.value = getCurrentDateTime();
+                }
+
+                }
+                 function getFileExtension(fileName) {
+                    return fileName.split('.').pop();
+                }
+
+                    function getCurrentDateTime() {
+                    var now = new Date();
+                    return now.toISOString().slice(0, 19).replace('T', ' ');
+                }
+
+    </script>
+
+    <script>
+        document.getElementById('vrstaDropdown').addEventListener('change', function () {
+            var selectedOption = this.options[this.selectedIndex];
+            var selectedId = selectedOption.value;
+            document.getElementById('vrstaIdInput').value = selectedId;
+        });
+    </script>
+    <script>
+        document.getElementById('naruciteljiDropdown').addEventListener('change', function () {
+            var selectedOption = this.options[this.selectedIndex];
+            var selectedId = selectedOption.value;
+            document.getElementById('naruciteljIdInput').value = selectedId;
+        });
+    </script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            var selectedVrstaId = @Html.Raw(Json.Serialize(Model.VrstaProjektaId ?? 0));
+            var selectedNaruciteljId = @Html.Raw(Json.Serialize(Model.NaruciteljId ?? 0));
+
+            if (selectedVrstaId !== 0) {
+                document.getElementById('vrstaDropdown').value = selectedVrstaId.toString();
+            }
+
+            if (selectedNaruciteljId !== 0) {
+                document.getElementById('naruciteljiDropdown').value = selectedNaruciteljId.toString();
+            }
+    
+        });
+    </script>
+}
+

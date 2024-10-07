@@ -1,0 +1,178 @@
+﻿@using Org.BouncyCastle.Crypto.Engines
+@model RPPP_WebApp.ViewModels.SuradnikMDViewModel
+
+@{
+    ViewBag.Title = $"Suradnik {Model.Ime} {Model.Prezime}";
+}
+
+<div class="d-flex align-items-center justify-content-start">
+    <a class="btn btn-secondary"
+       asp-action="Index"
+       asp-route-page="@ViewBag.Page"
+       asp-route-sort="@ViewBag.Sort"
+       asp-route-ascending="@ViewBag.Ascending"
+       title="Povratak na popis suradnika">
+        <i class="fas fa-arrow-left"></i>
+    </a>
+    <h2 class="mx-3 mt-1">@($"Suradnik {Model.Ime} {Model.Prezime}")</h2>
+</div>
+<div>
+    <form asp-route-id="@Model.Id"
+          asp-route-page="@ViewBag.Page"
+          asp-route-sort="@ViewBag.Sort"
+          asp-route-ascending="@ViewBag.Ascending"
+          asp-action="EditMD"
+          method="post">
+        <div asp-validation-summary="All"></div>
+        <div class="row">
+            <div class="mt-3 text-center">
+
+                <a asp-action="Index"
+                   asp-route-page="@ViewBag.Page"
+                   asp-route-sort="@ViewBag.Sort"
+                   asp-route-ascending="@ViewBag.Ascending"
+                   class="btn btn-secondary" title="Odustani (povratak)">
+                    <i class="fas fa-arrow-left"></i>
+                </a>
+                <a class="btn btn-sm btn-primary cancel mx-4"
+                   asp-action="Show"
+                   asp-route-id="@Model.Id"
+                   asp-route-page="@ViewBag.Page"
+                   asp-route-sort="@ViewBag.Sort"
+                   asp-route-ascending="@ViewBag.Ascending"
+                   asp-route-position="@ViewBag.Position"
+                   title="Osvježi">
+                    <i class="fas fa-sync-alt"></i>
+                </a>
+                <button class="btn btn-primary" type="submit" title="Spremi promjene">
+                    <i class="fas fa-save"></i>
+                </button>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-4 mt-3 text-start">
+                <label asp-for="Ime" class="form-label">Ime</label>
+                <input asp-for="Ime" class="form-control"/>
+                <div class="form-text">
+                    <span asp-validation-for="Ime" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="col-4 mt-3 text-start">
+                <label asp-for="Ime" class="form-label">Prezime</label>
+                <input asp-for="Prezime" class="form-control"/>
+                <div class="form-text">
+                    <span asp-validation-for="Prezime" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="col-4 mt-3 text-start">
+                <label asp-for="BrojTelefona" class="form-label">Broj telefona</label>
+                <input asp-for="BrojTelefona" class="form-control"/>
+                <div class="form-text">
+                    <span asp-validation-for="BrojTelefona" class="text-danger"></span>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-6 mt-3 text-start">
+                <label asp-for="Email" class="form-label">Email</label>
+                <input type="email" asp-for="Email" class="form-control"/>
+                <div class="form-text">
+                    <span asp-validation-for="Email" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="col-6 mt-3 text-start">
+                <label asp-for="Organizacija" class="form-label">Organizacija</label>
+                <input asp-for="Organizacija" class="form-control"/>
+                <div class="form-text">
+                    <span asp-validation-for="Organizacija" class="text-danger"></span>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-6 mt-3 text-start">
+                <label asp-for="VrstaSuradnikaId" class="form-label">Vrsta suradnika</label>
+                <select class="form-select" asp-for="VrstaSuradnikaId" asp-items="ViewBag.VrsteSuradnika">
+                </select>
+                <div class="form-text">
+                    <span asp-validation-for="VrstaSuradnikaId" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="col-6 mt-3 text-start">
+                <label asp-for="KorisnickiRacunId" class="form-label">Korisnički račun</label>
+                <select class="form-select" asp-for="KorisnickiRacunId" asp-items="ViewBag.KorisnickiRacuni">
+                </select>
+                <div class="form-text">
+                    <span asp-validation-for="KorisnickiRacunId" class="text-danger"></span>
+                </div>
+            </div>
+        </div>
+        <input type="hidden" asp-for="Id"/>
+        <h4 class="mt-4 mb-2">Uloge:</h4>
+        <div>
+            <partial name="Uloge" model="Model.Stavke"/>
+        </div>
+    </form>
+</div>
+
+<partial name="SuradnikUlogaTemplate"/>
+
+@section styles{
+    <link rel="stylesheet" href="~/lib/jqueryui/themes/base/jquery-ui.css"/>
+}
+
+@section scripts{
+    <partial name="IncludeValidation"/>
+    <script src="~/lib/jqueryui/jquery-ui.js"></script>
+    <script src="~/js/autocomplete.js" asp-append-version="true"></script>
+    <script>
+            var vrsteUlogaJson = @Html.Raw(Json.Serialize(ViewBag.VrsteUloga));
+            var projektiJson = @Html.Raw(Json.Serialize(ViewBag.Projekti));
+            var suradnikId = @Model.Id;
+    
+            function generateDropdownOptions(optionsJson, selectedId) {
+                console.log(optionsJson);
+                var options = optionsJson;
+                var dropdownOptions = "";
+                options.forEach(option => {
+                    if (option.Value === selectedId){
+                            dropdownOptions += `<option value="${option.Value}" selected="selected">${option.Text}</option>`;
+                    }
+                    else{
+                        dropdownOptions += `<option value="${option.Value}">${option.Text}</option>`;
+                    }
+                    
+                });
+                return dropdownOptions;
+            }
+    </script>
+    <script src="~/js/suradnikMD.js" asp-append-version="true"></script>
+    @* <script> *@
+    @*         document.getElementById('vrstaDropdown').addEventListener('change', function () { *@
+    @*             var selectedOption = this.options[this.selectedIndex]; *@
+    @*             var selectedId = selectedOption.value; *@
+    @*             document.getElementById('vrstaIdInput').value = selectedId; *@
+    @*         }); *@
+    @*     </script> *@
+    @*     <script> *@
+    @*         document.getElementById('naruciteljiDropdown').addEventListener('change', function () { *@
+    @*             var selectedOption = this.options[this.selectedIndex]; *@
+    @*             var selectedId = selectedOption.value; *@
+    @*             document.getElementById('naruciteljIdInput').value = selectedId; *@
+    @*         }); *@
+    @*     </script> *@
+    @*     <script> *@
+    @*         document.addEventListener("DOMContentLoaded", function () { *@
+    @*             var selectedVrstaId = @Html.Raw(Json.Serialize(Model.VrstaProjektaId ?? 0)); *@
+    @*             var selectedNaruciteljId = @Html.Raw(Json.Serialize(Model.NaruciteljId ?? 0)); *@
+    @* *@
+    @*             if (selectedVrstaId !== 0) { *@
+    @*                 document.getElementById('vrstaDropdown').value = selectedVrstaId.toString(); *@
+    @*             } *@
+    @* *@
+    @*             if (selectedNaruciteljId !== 0) { *@
+    @*                 document.getElementById('naruciteljiDropdown').value = selectedNaruciteljId.toString(); *@
+    @*             } *@
+    @*      *@
+    @*         }); *@
+    @*     </script> *@
+}

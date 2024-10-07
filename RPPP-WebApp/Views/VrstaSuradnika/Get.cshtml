@@ -1,0 +1,21 @@
+﻿@model RPPP_WebApp.ViewModels.VrstaSuradnikaViewModel
+
+<tr hx-target="this" hx-swap="outerHTML">
+    <td class="text-left">@Model.Vrsta</td>
+    <td>
+        <a asp-action="Edit"
+           asp-route-id="@Model.Id"
+           asp-route-page="@ViewBag.PagingInfo.CurrentPage"
+           asp-route-sort="@ViewBag.PagingInfo.Sort"
+           asp-route-ascending="@ViewBag.PagingInfo.Ascending"
+           class="btn btn-secondary btn-sm" title="Ažuriraj"><i class="fas fa-edit"></i></a>
+    </td>
+    <td>
+        <button class="btn btn-sm btn-danger"
+                hx-confirm="Obrisati vrstu suradnika?"
+                hx-delete="@Url.Action(nameof(VrstaSuradnikaController.Delete), new { id = Model.Id })"
+                title="Obriši">
+            <i class="fas fa-trash-alt"></i>
+        </button>
+    </td>
+</tr>

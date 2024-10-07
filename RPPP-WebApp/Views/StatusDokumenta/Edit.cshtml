@@ -1,0 +1,28 @@
+﻿@model RPPP_WebApp.Model.StatusDokumenta
+
+<tr hx-target="this" hx-swap="outerHTML">
+    <td class="text-start">
+        <input type="hidden" asp-for="Id" class="form-control" />
+    </td>
+    <td class="text-start">
+        <input asp-for="StatusDok" class="form-control" />
+    </td>
+    <td>
+        <input type="hidden" asp-for="Id" />
+        <button hx-include="closest tr"
+                hx-post="@Url.Action(nameof(StatusDokumentaController.Edit))"
+                class="btn btn-sm btn-success" title="Spremi">
+            <i class="fas fa-save"></i>
+        </button>
+    </td>
+    <td>
+        <button class="btn btn-sm btn-secondary cancel"
+                hx-get="@Url.Action(nameof(StatusDokumentaController.Get), new { id = Model.Id })"
+                title="Odustani">
+            <i class="fa-solid fa-rotate-left"></i>
+        </button>
+    </td>
+    <td>
+        <div asp-validation-summary="All"></div>
+    </td>
+</tr>

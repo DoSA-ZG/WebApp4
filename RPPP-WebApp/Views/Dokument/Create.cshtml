@@ -1,0 +1,111 @@
+﻿@model RPPP_WebApp.Model.Dokument
+@{
+    ViewBag.Title = "Dokumenti";
+}
+
+<div class="container-fluid">
+    <div class="form-group row">
+        <div class="col-sm-4">
+            <h2 class="mt-4 mb-3">Unos novog dokumenta</h2>
+        </div>
+    </div>
+</div>
+
+<div class="container-fluid mt-4 mb-3">
+
+    <form asp-action="Create" method="POST" id="dokument_form" enctype="multipart/form-data">
+        <div asp-validation-summary="All" class="form-group row"></div>
+
+        <label asp-for="NazivDok" class="col-sm-2 col-form-label"></label>
+        <div class="col-sm-3">
+            <input asp-for="NazivDok" class="form-control" />
+        </div>
+
+        <label asp-for="VrstaDokumentaId" class="form-label"></label>
+        <select class="form-select w-25" asp-for="VrstaDokumentaId" asp-items="ViewBag.vrsteDok">
+            <option disabled selected value="">Odaberite vrstu dokumenta</option>
+        </select>
+
+        <label asp-for="StatusDokumentaId" class="form-label"></label>
+        <select class="form-select w-25" asp-for="StatusDokumentaId" asp-items="ViewBag.statusiDok">
+            <option disabled selected value="">Odaberite status dokumenta</option>
+        </select>
+
+        <label asp-for="EkstenzijaDokumenta" class="col-sm-2 col-form-label"></label>
+        <div class="col-sm-3">
+            <input class="form-control" asp-for="EkstenzijaDokumenta" />
+            <div class="form-text"><span asp-validation-for="EkstenzijaDokumenta" class="text-danger"></span></div>
+        </div>
+
+        <label asp-for="VrPrijenos" class="col-sm-2 col-form-label"></label>
+        <div class="col-sm-3">
+            <input class="form-control" step="any" asp-for="VrPrijenos" />
+            <div class="form-text"><span asp-validation-for="VrPrijenos" class="text-danger"></span></div>
+        </div>
+
+        <label asp-for="DatumZadIzmj" class="col-sm-2 col-form-label"></label>
+        <div class="col-sm-3">
+            <input asp-for="DatumZadIzmj" step="any" class="form-control" />
+        </div>
+
+        <label asp-for="ProjektId" class="form-label"></label>
+        <select class="form-select w-25" asp-for="ProjektId" asp-items="ViewBag.projekti">
+            <option disabled selected value="">Odaberite projekt</option>
+        </select>
+
+        <label asp-for="Datoteka" class="col-sm-2 col-form-label"></label>
+        <div class="col-sm-3">
+            <input type="file" name="datoteka" class="form-control" />
+        </div>
+        <div class="form-text col-sm-3">
+            <span asp-validation-for="Datoteka" class="text-danger"></span>
+        </div>
+
+        <div class="col-sm-2 mt-4 mb-4">
+            <button id="save" type="submit" class="btn btn-block btn-success save mr-3" title="Spremi">Spremi <i class="fas fa-save"></i></button>
+            <a class="btn btn-block btn-secondary cancel ml-3" asp-action="Index" title="Odustani">
+                Odustani <i class="fas fa-undo-alt"></i>
+            </a>
+        </div>
+
+        <hr />
+
+    </form>
+
+</div>
+
+@section Scripts {
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+
+            var fileInput = document.querySelector('input[type="file"]');
+            var fileNameInput = document.querySelector('input[name="NazivDok"]');
+            var fileExtensionInput = document.querySelector('input[name="EkstenzijaDokumenta"]');
+            var vrPrijenosInput = document.querySelector('input[name="VrPrijenos"]');
+            var datumZadIzmjinput = document.querySelector('input[name="DatumZadIzmj"]');
+
+
+            fileInput.addEventListener('change', function () {
+
+                if (fileInput.files.length > 0) {
+
+                    var fileName = fileInput.files[0].name;
+                    fileNameInput.value = fileName.split('.').slice(0, -1).join('.');
+                    fileExtensionInput.value = '.' + getFileExtension(fileName);
+                    vrPrijenosInput.value = getCurrentDateTime();
+                    datumZadIzmjinput.value = getCurrentDateTime();
+                }
+            });
+
+            function getFileExtension(fileName) {
+                return fileName.split('.').pop();
+            }
+
+            function getCurrentDateTime() {
+                var now = new Date();
+                return now.toISOString().slice(0, 19).replace('T', ' ');
+            }
+        });
+    </script>
+}
+

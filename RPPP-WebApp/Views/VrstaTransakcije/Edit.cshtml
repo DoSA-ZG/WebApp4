@@ -1,0 +1,21 @@
+@model VrstaTransakcije
+@{
+    ViewData["Title"] = "Ažuriranje vrste transakcije";
+}
+
+<form asp-route-id="@Model.Id" asp-action="Update" method="post">
+    <div asp-validation-summary="All"></div>
+    <div class="mb-3">
+        <label asp-for="Vrsta" class="form-label">Vrsta transakcije</label>
+        <input asp-for="Vrsta" class="form-control" />
+        <div class="form-text"><span asp-validation-for="Vrsta" class="text-danger"></span></div>
+    </div>
+    <div class="text-center">
+        <button class="btn btn-primary" type="submit">Ažuriraj</button>
+        <a asp-action="Index" class="btn btn-secondary">Odustani</a>
+    </div>
+</form>
+
+@section scripts {
+    <partial name="IncludeValidation" />
+}

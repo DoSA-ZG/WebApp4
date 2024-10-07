@@ -1,0 +1,30 @@
+﻿@model RPPP_WebApp.Model.PrioritetZadatka
+
+@{
+    ViewBag.Title = "Novi prioritet zadatka";
+}
+
+<h2>Unos novog zadatka</h2>
+
+<form asp-action="Create" method="post">
+    <div asp-validation-summary="All"></div>
+    <div class="form-group">
+        <label asp-for="NazivPrioriteta"></label>
+        <div><span asp-validation-for="NazivPrioriteta" class="text-danger"></span></div>
+        <input asp-for="NazivPrioriteta" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label asp-for="StupanjPrioriteta"></label>
+        <div><span asp-validation-for="StupanjPrioriteta" class="text-danger"></span></div>
+        <input asp-for="StupanjPrioriteta" class="form-control" />
+    </div>
+  
+    <div class="text-center">
+        <button class="btn btn-primary" type="submit">Dodaj</button>
+        <a asp-action="Index" class="btn btn-default">Odustani</a>
+    </div>
+</form>
+
+@section scripts {
+    <partial name="IncludeValidation" />
+}

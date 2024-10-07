@@ -1,0 +1,40 @@
+﻿@model RPPP_WebApp.Model.ProjektniZahtjev
+
+<tr hx-target="this" hx-swap="outerHTML">
+    <td class="text-start">
+        <input asp-for="NazivZahtjeva" class="form-control" />
+    </td>
+    <td class="text-start">
+        <input asp-for="OpisZahtjeva" class="form-control" />
+    </td>
+    <td class="text-start">
+        <select class="form-select" asp-for="PrioritetZahtjevaId" asp-items="ViewBag.ProjektniZahtjevi">
+        </select>
+    </td>
+    <td class="text-start">
+        <select class="form-select" asp-for="VrstaZahtjevaId" asp-items="ViewBag.ProjektniZahtjevi">
+        </select>
+    </td>
+    <td class="text-start">
+        <select class="form-select" asp-for="ProjektId" asp-items="ViewBag.ProjektniZahtjevi">
+        </select>
+    </td>
+    <td>
+        <input type="hidden" asp-for="Id" />
+        <button hx-include="closest tr"
+                hx-post="@Url.Action(nameof(RPPP_WebApp.Controllers.ProjektniZahtjevController.Edit))"
+                class="btn btn-sm btn-primary" title="Spremi">
+            <i class="fas fa-save"></i>
+        </button>
+    </td>
+    <td>
+        <button class="btn btn-sm cancel"
+                hx-get="@Url.Action(nameof(RPPP_WebApp.Controllers.ProjektniZahtjevController.Get), new { id = Model.Id })"
+                title="Odustani">
+            <i class="fas fa-undo-alt"></i>
+        </button>
+    </td>
+    <td>
+        <div asp-validation-summary="All"></div>
+    </td>
+</tr>

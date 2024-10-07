@@ -1,0 +1,81 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Pregled svih naručitelja</title>
+    <link href="lib/jqueryui/themes/base/jquery-ui.min.css" rel="stylesheet" type="text/css" />
+    <link href="lib/jtable/lib/themes/lightcolor/blue/jtable.min.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+    <div class="container">
+        <div class="row">
+            Filtriraj po nazivu naručitelja: <input type="text" id="filter" />
+            <button id="btnFilter">Filtriraj</button>
+        </div>
+        <div class="row">
+            <div class="col-sm-12" id="narucitelji">
+
+            </div>
+        </div>
+    </div>
+
+    <script type="text/javascript" src="lib/jquery/jquery.min.js"></script>
+    <script type="text/javascript" src="lib/jqueryui/jquery-ui.min.js"></script>
+    <script type="text/javascript" src="lib/jtable/lib/jquery.jtable.min.js"></script>
+    <script type="text/javascript" src="lib/jtable/lib/localization/jquery.jtable.hr.js"></script>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#narucitelji').jtable({
+                title: 'Popis naručitelja',
+                paging: true,
+                pageSize: 10,
+                sorting: true,
+                defaultSorting: 'Id DESC',
+                actions: {
+                    listAction: 'jtable/narucitelj/getall',
+                    createAction: 'jtable/narucitelj/create',
+                    updateAction: 'jtable/narucitelj/update',
+                    deleteAction: 'jtable/narucitelj/delete'
+                },
+                fields: {
+                    Id: {
+                        key: true,
+                        list: false
+                    },
+                    NazivNarucitelj: {
+                        title: 'Naziv naručitelja',
+                        width: '20%'
+                    },
+                    Iban: {
+                        title: 'IBAN',
+                        width: '20%'
+                    },
+                    Oib: {
+                        title: 'OIB',
+                        width: '20%'
+                    },
+                    Adresa: {
+                        title: 'Adresa',
+                        width: '20%',
+                    },
+                    Email: {
+                        title: 'E-mail',
+                        width: '20%',
+                    }
+                }
+            });
+
+            $("#narucitelji").jtable('load');
+
+            $("#btnFilter").click(function (event) {
+                event.preventDefault();
+                $("#narucitelji").jtable('load', {
+                    search: $('#filter').val()
+                });
+            });
+        });
+    </script>
+
+</body>
+</html>

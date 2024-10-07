@@ -1,0 +1,85 @@
+﻿@model IEnumerable<SuradnikUloga>
+
+<table class="table table-striped" id="table-uloge">
+    <thead>
+    <tr>
+        @{
+            string[] nazivi =
+            {
+                "Datum početka", "Datum kraja", "Projekt", "Vrsta uloge"
+            };
+            for (int i = 0; i < nazivi.Length; i++)
+            {
+                <th class="table-column-font-size text-left">
+                    @nazivi[i]
+                </th>
+            }
+        }
+        <th></th>
+    </tr>
+    </thead>
+    <tbody>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td class="text-left col-sm-2">
+                <input type="hidden" name="Stavke.Index" value="@item.Id"/>
+                <input type="hidden" name="Stavke[@item.Id].Id" value="@item.Id"/>
+                <input type="hidden" name="Stavke[@item.Id].SuradnikId" value="@item.SuradnikId"/>
+                <input name="Stavke[@item.Id].DatumPocetak" class="form-control" value="@item.DatumPocetak"/>
+            </td>
+            <td class="text-center col-sm-2">
+                <input name="Stavke[@item.Id].DatumKraj" class="form-control" value="@item.DatumKraj"/>
+            </td>
+            <td class="text-right col-sm-4">
+                <select class="form-select" name="Stavke[@item.Id].ProjektId" asp-for="@item.ProjektId" asp-items="ViewBag.Projekti">
+                    @* <option value="">Odaberite projekt</option> *@
+                </select>
+            </td>
+            <td class="text-right col-sm-4">
+                <select class="form-select" name="Stavke[@item.Id].VrstaUlogeId" asp-for="@item.VrstaUlogeId" asp-items="ViewBag.VrsteUloga">
+                    @* <option value="">Odaberite vrstu uloge</option> *@
+                </select>
+            </td>
+            <td>
+                <button class="btn btn-sm btn-danger deleterow" title="Izbaci">
+                    <i class="fa fa-minus"></i>
+                </button>
+            </td>
+        </tr>
+    }
+
+    <tr>
+        <td class="text-center col-sm-2">
+            <input id="uloga-id" type="hidden" readonly="readonly" value="1000000"/>
+            @* <input id="suradnik-id" type="hidden" readonly="readonly"/> *@
+            <input id="uloga-datum-od" class="form-control"/>
+        </td>
+        <td class="text-center col-sm-2">
+            <input id="uloga-datum-do" class="form-control"/>
+        </td>
+        @* <td class="text-center col-sm-4"> *@
+        @*     <input id="uloga-projekt" type="text" class="form-select"/> *@
+        @* </td> *@
+        @* <td class="text-right col-sm-4"> *@
+        @*     <input id="uloga-vrsta-uloge" type="text" readonly="readonly" class="form-select"/> *@
+        @* </td> *@
+        <td class="text-center col-sm-4">
+            <select id="uloga-projekt" class="form-select" asp-items="ViewBag.Projekti">
+                <option disabled selected value="">Odaberite projekt</option>
+            </select>
+        </td>
+        <td class="text-center col-sm-4">
+            <select id="uloga-vrsta-uloge" class="form-select" asp-items="ViewBag.VrsteUloga">
+                <option disabled selected value="">Odaberite vrstu uloge</option>
+            </select>
+        </td>
+        <td class="text-left" colspan="3">
+            <button id="uloga-dodaj" class="btn btn-sm btn-success" title="Dodaj">
+                <i class="fas fa-plus"></i>
+            </button>
+        </td>
+    </tr>
+    </tbody>
+</table>

@@ -1,0 +1,141 @@
+﻿@model RPPP_WebApp.ViewModels.ProjektViewModel
+@{
+    ViewBag.Title = "Unos novog projekta";
+}
+
+<div class="container-fluid">
+    <div class="form-group row">
+        <div class="col-sm-4">
+            <h2 class="mt-4 mb-3">Unos novog projekta</h2>
+        </div>
+    </div>
+</div>
+
+<div class="container-fluid mt-4 mb-3">
+
+    <form asp-action="Create" method="POST" id="projektForm" enctype="multipart/form-data">
+        <div asp-validation-summary="All" class="form-group row"></div>
+
+        <div class="form-group row mb-1">
+            <label asp-for="NazivProjekt" class="col-sm-2 col-form-label"></label>
+            <div class="col-sm-3">
+                <input asp-for="NazivProjekt" class="form-control" />
+                <div class="form-text"><span asp-validation-for="NazivProjekt" class="text-danger"></span></div>
+            </div>
+
+            <label asp-for="KraticaProjekt" class="col-sm-2 col-form-label"></label>
+            <div class="col-sm-1">
+                <input asp-for="KraticaProjekt" class="form-control" />
+            </div>
+        </div>
+
+        <div class="form-group row mb-1">
+            <label asp-for="DatumIsporukaPr" class="col-sm-2 col-form-label"></label>
+            <div class="col-sm-3">
+                <input asp-for="DatumIsporukaPr" class="form-control" />
+            </div>
+            <div class="form-text"><span asp-validation-for="DatumIsporukaPr" class="text-danger"></span></div>
+        </div>
+
+        <div class="form-group row mb-1">
+
+            <label asp-for="Vrsta" class="col-sm-2 col-form-label">Vrsta projekta</label>
+            <div class="col-sm-3">
+                <select class="form-control" asp-for="Vrsta" asp-items="ViewBag.VrsteProj" id="vrstaDropdown">
+                    <option disabled selected value="">Odaberite vrstu projekta</option>
+                </select>
+                <div class="form-text"><span asp-validation-for="Vrsta" class="text-danger"></span></div>
+            </div>
+
+            <label asp-for="VrstaProjektaId" class="col-sm-2 col-form-label">ID Vrste projekta</label>
+            <div class="col-sm-1">
+                <input asp-for="@Model.VrstaProjektaId" readonly="readonly" class="form-control" id="vrstaIdInput" />
+            </div>
+        </div>
+
+        <div class="form-group row mb-1">
+
+            <label asp-for="NazivNarucitelj" class="col-sm-2 col-form-label">Naziv naručitelja</label>
+            <div class="col-sm-3">
+                <select class="form-control" asp-for="NazivNarucitelj" asp-items="ViewBag.Narucitelji" id="naruciteljiDropdown">
+                    <option disabled selected value="">Odaberite naručitelja</option>
+                </select>
+                <div class="form-text"><span asp-validation-for="NazivNarucitelj" class="text-danger"></span></div>
+            </div>
+
+            <label asp-for="NaruciteljId" class="col-sm-2 col-form-label">ID Naručitelja</label>
+            <div class="col-sm-1">
+                <input asp-for="@Model.NaruciteljId" readonly="readonly" class="form-control" id="naruciteljIdInput" />
+            </div>
+        </div>
+
+        <div class="col-sm-2 mt-4 mb-4">
+            <button id="save" type="submit" class="btn btn-block btn-success save mr-3" title="Spremi">Spremi <i class="fas fa-save"></i></button>
+            <a class="btn btn-block btn-secondary cancel ml-3" asp-action="Index" title="Odustani">
+                Odustani <i class="fas fa-undo-alt"></i>
+            </a>
+        </div>
+
+        <hr />
+
+
+        <table id="documentsTable" class="table">
+            <thead>
+                <tr>
+                    @{
+                        string[] nazivi = { "Naziv dokumenta", "Vrsta dokumenta", "Status dokumenta", "Ekstenzija dokumenta", "Vrijeme prijenosa", "Posljednja izmjena", "Datoteka" };
+                        for (int i = 0; i < nazivi.Length; i++)
+                        {
+                            <th class="text-left">
+                                @nazivi[i]
+                            </th>
+                        }
+                    }
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody id="documentsSection">
+            </tbody>
+        </table>
+        <button class="btn btn-sm btn-success" title="Dodaj dokument" onclick="addDocument(event)"><i class="fas fa-plus"></i></button>
+    </form>
+</div>
+
+
+@section scripts {
+
+    <script>
+        var statusiDokJson = @Html.Raw(Json.Serialize(ViewBag.Statusi));
+        var vrsteDokJson = @Html.Raw(Json.Serialize(ViewBag.VrsteDok));
+
+        function generateDropdownOptions(optionsJson) {
+            console.log(optionsJson);
+            var options = optionsJson;
+            var dropdownOptions = "";
+            options.forEach(option => {
+                dropdownOptions += `<option value="${option.Value}">${option.Text}</option>`;
+            });
+            return dropdownOptions;
+        }
+    </script>
+
+    <script src="~/js/projektiCreate.js" asp-append-version="true"></script>
+    <script src="~/js/projekti.js" asp-append-version="true"></script>
+
+    <script>
+        document.getElementById('vrstaDropdown').addEventListener('change', function () {
+            var selectedOption = this.options[this.selectedIndex];
+            var selectedId = selectedOption.value;
+            selectedId = selectedId === null || selectedId.trim() === '' ? 0 : selectedId;
+            document.getElementById('vrstaIdInput').value = selectedId;
+        });
+    </script>
+    <script>
+        document.getElementById('naruciteljiDropdown').addEventListener('change', function () {
+            var selectedOption = this.options[this.selectedIndex];
+            var selectedId = selectedOption.value;
+            selectedId = selectedId === null || selectedId.trim() === '' ? 0 : selectedId;
+            document.getElementById('naruciteljIdInput').value = selectedId;
+        });
+    </script>
+}

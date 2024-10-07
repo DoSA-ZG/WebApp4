@@ -1,0 +1,71 @@
+﻿@model RPPP_WebApp.Model.Dokument
+
+<tr hx-target="this" hx-swap="outerHTML">
+    <td class="text-start">
+        <input type="hidden" asp-for="Id" class="form-control" />
+    </td>
+    <td class="text-start">
+        <input asp-for="NazivDok" class="form-control w-100" />
+    </td>
+    <td class="text-start">
+        <select class="form-select" asp-for="VrstaDokumentaId" asp-items="ViewBag.vrsteDok"></select>
+    </td>
+    <td class="text-start">
+        <select class="form-select" asp-for="StatusDokumentaId" asp-items="ViewBag.statusiDok"></select>
+    </td>
+    <td class="text-start">
+        <input asp-for="EkstenzijaDokumenta" class="form-control" />
+    </td>
+    <td class="text-start">
+        <input asp-for="VrPrijenos" class="form-control w-75" />
+    </td>
+    <td class="text-start">
+        <input asp-for="DatumZadIzmj" class="form-control w-75" />
+    </td>
+    <td class="text-start">
+        <select class="form-select" asp-for="ProjektId" asp-items="ViewBag.projekti"></select>
+    </td>
+    <td class="w-50">
+        <input type="file" name="datoteka" class="form-control w-75" onchange="handleFileChange(this)" />
+    </td>
+    <td>
+        <input type="hidden" asp-for="Id" />
+        <button hx-include="closest tr"
+                hx-encoding="multipart/form-data"
+                hx-post="@Url.Action(nameof(DokumentController.Edit))"
+                class="btn btn-sm btn-success" title="Spremi">
+            <i class="fas fa-save"></i>
+        </button>
+    </td>
+    <td>
+        <button class="btn btn-sm btn-secondary cancel"
+                hx-get="@Url.Action(nameof(DokumentController.Get), new { id = Model.Id })"
+                title="Odustani">
+            <i class="fa-solid fa-rotate-left"></i>
+        </button>
+    </td>
+    <td>
+        <div asp-validation-summary="All"></div>
+    </td>
+</tr>
+
+<script>
+    function handleFileChange(input) {
+        if (input.files && input.files.length > 0) {
+            var file = input.files[0];
+            var currentDate = new Date();
+            currentDate.setTime(currentDate.getTime() - currentDate.getTimezoneOffset() * 60 * 1000);
+
+            var formattedDate = currentDate.toISOString().slice(0, 16).replace("T", " ");
+
+            $("input[name='DatumZadIzmj']").val(formattedDate);
+            $("input[name='VrPrijenos']").val(formattedDate);
+
+            var fileNameWithoutExtension = file.name.replace(/\.[^\.]+$/, "");
+            $("input[name='NazivDok']").val(fileNameWithoutExtension);
+
+            var fileExtension = file.name.split('.').pop();
+            $("input[name='EkstenzijaDokumenta']").val("." + fileExtension);
+        }
+    }
+</script>

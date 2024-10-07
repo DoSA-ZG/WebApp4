@@ -1,0 +1,33 @@
+﻿@model RPPP_WebApp.Model.StatusDokumenta
+@{
+    ViewBag.Title = "Unos novog status dokumenta";
+}
+
+<div class="container-fluid">
+    <div class="form-group row">
+        <div class="col-sm-4">
+            <h2 class="mt-4 mb-3">Unos novog statusa dokumenta</h2>
+        </div>
+    </div>
+</div>
+
+<div class="container-fluid mt-4 mb-3">
+
+    <form asp-action="Create" method="POST" id="narucitelj_form">
+        <div asp-validation-summary="All" class="form-group row"></div>
+
+        <label asp-for="StatusDok" class="col-sm-2 col-form-label"></label>
+        <div class="col-sm-3">
+            <input asp-for="StatusDok" class="form-control" />
+            <div class="form-text"><span asp-validation-for="StatusDok" class="text-danger"></span></div>
+        </div>
+
+        <div class="col-sm-2 mt-4 mb-4">
+            <button id="save" type="submit" class="btn btn-block btn-success save mr-3" title="Spremi">Spremi <i class="fas fa-save"></i></button>
+            <a class="btn btn-block btn-secondary cancel ml-3" asp-action="Index" title="Odustani">
+                Odustani <i class="fas fa-undo-alt"></i>
+            </a>
+        </div>
+    </form>
+    <hr />
+</div>

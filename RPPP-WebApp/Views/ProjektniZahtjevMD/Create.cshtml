@@ -1,0 +1,48 @@
+﻿@model RPPP_WebApp.Model.ProjektniZahtjev
+
+@{
+    ViewBag.Title = "Novi projektni zahtjev";
+}
+
+<form asp-action="Create" method="post">
+    <div asp-validation-summary="All"></div>
+    <div class="form-group">
+        <label asp-for="NazivZahtjeva"></label>
+        <div><span asp-validation-for="NazivZahtjeva" class="text-danger"></span></div>
+        <input asp-for="NazivZahtjeva" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label asp-for="OpisZahtjeva"></label>
+        <div><span asp-validation-for="OpisZahtjeva" class="text-danger"></span></div>
+        <input asp-for="OpisZahtjeva" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label asp-for="PrioritetZahtjeva"></label>
+        <div><span asp-validation-for="PrioritetZahtjevaId" class="text-danger"></span></div>
+        <select class="form-control" asp-for="PrioritetZahtjevaId" asp-items="ViewBag.PrioritetiZahtjeva">
+            <option disabled selected value="">Odaberite prioritet zahtjeva</option>
+        </select>
+    </div>
+    <div class="form-group">
+        <label asp-for="VrstaZahtjeva"></label>
+        <div><span asp-validation-for="VrstaZahtjevaId" class="text-danger"></span></div>
+        <select class="form-control" asp-for="VrstaZahtjevaId" asp-items="ViewBag.ProjektniZahtjevi">
+            <option disabled selected value="">Odaberite vrstu zahtjeva</option>
+        </select>
+    </div>
+    <div class="form-group">
+        <label asp-for="Projekt"></label>
+        <div><span asp-validation-for="ProjektId" class="text-danger"></span></div>
+        <select class="form-control" asp-for="ProjektId" asp-items="ViewBag.ProjektniZahtjevi">
+            <option disabled selected value="">Odaberite projekt</option>
+        </select>
+    </div>
+    <div class="text-center">
+        <button class="btn btn-primary" type="submit">Dodaj</button>
+        <a asp-action="Index" class="btn btn-default">Odustani</a>
+    </div>
+</form>
+
+@section scripts {
+    <partial name="IncludeValidation" />
+}

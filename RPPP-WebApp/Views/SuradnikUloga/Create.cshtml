@@ -1,0 +1,67 @@
+﻿@model SuradnikUloga
+
+@{
+    ViewBag.Title = "Dodavanje nove uloge suradnika";
+}
+
+<div class="container mt-5">
+
+    <h2>Dodavanje nove uloge suradnika</h2>
+
+    <form asp-action="Create" method="post">
+        <div asp-validation-summary="All"></div>
+        <div class="mt-3 text-start">
+            <label asp-for="DatumPocetak" class="form-label">Datum početka</label>
+            <input type="date" asp-for="DatumPocetak" class="form-control"/>
+            <div class="form-text">
+                <span asp-validation-for="DatumPocetak" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="mt-3 text-start">
+            <label asp-for="DatumKraj" class="form-label">Datum kraja</label>
+            <input type="date" asp-for="DatumKraj" class="form-control"/>
+            <div class="form-text">
+                <span asp-validation-for="DatumKraj" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="mt-3 text-start">
+            <label asp-for="ProjektId" class="form-label">Projekt</label>
+            <select class="form-select" asp-for="ProjektId" asp-items="ViewBag.Projekti">
+            </select>
+            <div class="form-text">
+                <span asp-validation-for="ProjektId" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="mt-3 text-start">
+            <label asp-for="SuradnikId" class="form-label">Suradnik</label>
+            <select class="form-select" asp-for="SuradnikId" asp-items="ViewBag.Suradnici">
+            </select>
+            <div class="form-text">
+                <span asp-validation-for="SuradnikId" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="mt-3 text-start">
+            <label asp-for="VrstaUlogeId" class="form-label">Vrsta uloge</label>
+            <select class="form-select" asp-for="VrstaUlogeId" asp-items="ViewBag.VrsteUloga">
+            </select>
+            <div class="form-text">
+                <span asp-validation-for="VrstaUlogeId" class="text-danger"></span>
+            </div>
+        </div>
+        @* <input type="hidden" asp-for="Id"/> *@
+        <div class="mt-3 text-center">
+            <button class="btn btn-success" type="submit">Potvrdi</button>
+            <a asp-action="Index"
+               asp-route-page="@ViewBag.Page"
+               asp-route-sort="@ViewBag.Sort"
+               asp-route-ascending="@ViewBag.Ascending"
+               class="btn btn-secondary">
+                Odustani
+            </a>
+        </div>
+    </form>
+</div>
+
+@section scripts {
+    <partial name="IncludeValidation"/>
+}

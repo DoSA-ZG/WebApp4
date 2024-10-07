@@ -1,0 +1,74 @@
+﻿@model Zadatak
+
+@{
+    ViewBag.Title = "Novi zadatak";
+}
+
+<h2>Unos novog zadatka</h2>
+
+<form
+      asp-route-page="@ViewBag.Page"
+      asp-route-sort="@ViewBag.Sort"
+      asp-route-ascending="@ViewBag.Ascending" asp-action="Create" method="post">
+  <div asp-validation-summary="All"></div>
+    <div class="mb-3">
+        <label asp-for="OpisZadatak" class="form-label">Opis zadatka</label>
+        <input asp-for="OpisZadatak" class="form-control" />
+        <div class="form-text"><span asp-validation-for="OpisZadatak" class="text-danger"></span></div>
+    </div>
+  <div class="mb-3">
+    <label asp-for="PlanPocetak" class="form-label">Planirani početak</label>
+    <input asp-for="PlanPocetak" class="form-control" />
+    <div class="form-text"><span asp-validation-for="PlanPocetak" class="text-danger"></span></div>
+  </div>
+  <div class="mb-3">
+    <label asp-for="PlanKraj" class="form-label">Planirani kraj</label>
+        <input asp-for="PlanKraj" class="form-control" />
+        <div class="form-text"><span asp-validation-for="PlanKraj" class="text-danger"></span></div>
+  </div>
+  <div class="mb-3">
+    <label asp-for="StvarniPocetak" class="form-label">Stvarni početak</label>
+        <input  asp-for="StvarniPocetak" class="form-control" />
+        <div class="form-text"><span asp-validation-for="StvarniPocetak" class="text-danger"></span></div>
+  </div>
+  <div class="mb-3">
+    <label asp-for="StvarniKraj" class="form-label">Stvarni kraj</label>
+        <input  asp-for="StvarniKraj" class="form-control" />
+        <div class="form-text"><span asp-validation-for="StvarniKraj" class="text-danger"></span></div>
+  </div>
+   <div class="mb-3">
+        <label asp-for="PrioritetZadatkaId" class="form-label"></label>
+        <select class="form-control" asp-for="PrioritetZadatkaId" asp-items="ViewBag.Prioriteti">
+            <option disabled selected value="">Odaberite prioritet</option>
+        </select>
+        <div class="form-text"><span asp-validation-for="PrioritetZadatkaId" class="text-danger"></span></div>
+    </div>
+    <div class="mb-3">
+        <label asp-for="SuradnikId" class="form-label"></label>
+        <select class="form-control" asp-for="SuradnikId" asp-items="ViewBag.Suradnici">
+            <option disabled selected value="">Odaberite suradnika</option>
+        </select>
+        <div class="form-text"><span asp-validation-for="SuradnikId" class="text-danger"></span></div>
+    </div>
+    <div class="mb-3">
+        <label asp-for="StatusZadatkaId" class="form-label"></label>
+        <select class="form-control" asp-for="StatusZadatkaId" asp-items="ViewBag.Statusi">
+            <option disabled selected value="">Odaberite status</option>
+        </select>
+        <div class="form-text"><span asp-validation-for="SuradnikId" class="text-danger"></span></div>
+    </div>
+    <div class="mb-3">
+        <label asp-for="ProjektniZahtjevId" class="form-label"></label>
+        <select class="form-control" asp-for="ProjektniZahtjevId" asp-items="ViewBag.Zahtjevi">
+            <option disabled selected value="">Odaberite zahtjev</option>
+        </select>
+        <div class="form-text"><span asp-validation-for="SuradnikId" class="text-danger"></span></div>
+    </div>
+  <div class="text-center">
+    <button class="btn btn-primary" type="submit">Dodaj</button>
+    <a asp-action="Index" class="btn btn-secondary">Odustani</a>
+  </div>
+</form>
+@section scripts {
+    <partial name="IncludeValidation" />
+}
